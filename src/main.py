@@ -1,6 +1,11 @@
+import sys
 import os
-from gerador_pomar import gerar_pomar, parametros_sensor
 
+# Adiciona a pasta 'src' ao caminho de procura do Python
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
+
+from gerador_pomar import gerar_pomar, parametros_sensor
 def main():
     matricula = 24114072
     pomar = gerar_pomar(matricula)
