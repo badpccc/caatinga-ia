@@ -1,7 +1,7 @@
 # Relatório Técnico - Sprint 1: Projeto Caatinga.Al
-**Disciplina:** Inteligência Artificial | **UniRios** (2026.2)[cite: 1]  
-**Professor:** Ronierison Maciel[cite: 1]  
-**Matrícula-Semente:** 24114072[cite: 1]
+**Disciplina:** Inteligência Artificial | **UniRios** (2026.2)
+**Professor:** Ronierison Maciel
+**Matrícula-Semente:** 24114072
 
 ---
 
@@ -9,8 +9,8 @@
 
 ### 1.1 Ficha PEAS
 * **Medida de Desempenho (P):** Minimização do custo do caminho total de inspeção, maximização de pragas reais detectadas corretamente e minimização de horas perdidas com alarmes falsos de sensores.
-* **Ambiente (E):** Pomar de manga da cooperativa do Vale do São Francisco estruturado em uma grade de $12\times12$ talhões com custos diferenciados e áreas bloqueadas[cite: 1].
-* **Atuadores (A):** Movimentação ortogonal nas quatro direções (Norte, Sul, Leste, Oeste) e acionamento do sensor óptico de detecção de pragas[cite: 1].
+* **Ambiente (E):** Pomar de manga da cooperativa do Vale do São Francisco estruturado em uma grade de $12\times12$ talhões com custos diferenciados e áreas bloqueadas.
+* **Atuadores (A):** Movimentação ortogonal nas quatro direções (Norte, Sul, Leste, Oeste) e acionamento do sensor óptico de detecção de pragas.
 * **Sensores (S):** Sistema de geolocalização na grade e sensor óptico de leitura de talhões suspeitos.
 
 ### 1.2 Classificação do Ambiente
@@ -18,13 +18,13 @@
 2. **Determinístico:** Determinístico (As ações de transição para talhões vizinhos válidos possuem efeitos previsíveis).
 3. **Episódico:** Sequencial (As ações tomadas em cada talhão influenciam diretamente o estado global do custo acumulado da rota).
 4. **Estático:** Estático (O ambiente do pomar não se altera enquanto o agente calcula os planos de rota).
-5. **Discreto:** Discreto (Espaço de estados finito representado por uma grade matricial discreta $12\times12$)[cite: 1].
+5. **Discreto:** Discreto (Espaço de estados finito representado por uma grade matricial discreta $12\times12$).
 6. **Agente Único:** Agente único.
 * *Nota de discussão:* A observabilidade e o determinismo são as dimensões discutíveis; a falta de informações dinâmicas sobre imprevistos climáticos em tempo real decidiria a questão entre estático e dinâmico.
 
 ### 1.3 Tipo de Agente
 * **Escolhido:** Agente baseado em objetivos.  
-* *Justificativa:* O agente precisa planejar um caminho direcionado da origem $(0,0)$ até o ponto de coleta $(11,11)$ respeitando restrições de custos dos talhões, o que exige representação explícita de metas e cálculo de caminhos[cite: 1].
+* *Justificativa:* O agente precisa planejar um caminho direcionado da origem $(0,0)$ até o ponto de coleta $(11,11)$ respeitando restrições de custos dos talhões, o que exige representação explícita de metas e cálculo de caminhos.
 
 ### 1.4 Métrica Perversa
 * **Proposta Inicial (Ruim):** Maximizar o número de talhões inspecionados por hora.
@@ -36,27 +36,27 @@
 ## 2. Parte 2 — Formulação e Busca Cega
 
 ### 2.1 Cinco Componentes da Busca
-1. **Estado Inicial:** Posição $(0,0)$ (Portão de entrada no canto superior esquerdo)[cite: 1].
-2. **Ações:** Movimentos ortogonais válidos: `{Norte, Sul, Leste, Oeste}`[cite: 1].
-3. **Modelo de Transição:** Move o agente de $(i, j)$ para $(i', j')$ se o talhão destino não for bloqueado (`#`)[cite: 1].
-4. **Teste de Objetivo:** Verificar se a posição atual corresponde a $(11,11)$ (Ponto de coleta)[cite: 1].
-5. **Custo do Caminho:** Somatória dos custos de entrada nos talhões visitados ($1$ para carreador firme `.` e $4$ para solo encharcado `~`), desconsiderando o talhão inicial[cite: 1].  
+1. **Estado Inicial:** Posição $(0,0)$ (Portão de entrada no canto superior esquerdo).
+2. **Ações:** Movimentos ortogonais válidos: `{Norte, Sul, Leste, Oeste}`.
+3. **Modelo de Transição:** Move o agente de $(i, j)$ para $(i', j')$ se o talhão destino não for bloqueado (`#`).
+4. **Teste de Objetivo:** Verificar se a posição atual corresponde a $(11,11)$ (Ponto de coleta).
+5. **Custo do Caminho:** Somatória dos custos de entrada nos talhões visitados ($1$ para carreador firme `.` e $4$ para solo encharcado `~`), desconsiderando o talhão inicial.  
 *O espaço de estados possui $12 \times 12 = 144$ talhões possíveis.*
 
 ### 2.2 Tabela de Desempenho das Buscas Cegas e Uniformes
 | Estratégia | Custo da Rota | Nº de Passos | Nós Expandidos | Fronteira Máx. | Rota é Ótima em Custo? |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **BFS** | 55 | 22 | ~120 | ~45 | Não[cite: 1] |
+| **BFS** | 55 | 22 | ~120 | ~45 | Não |
 | **DFS** | - | - | - | - | Não |
-| **UCS** | 34 | - | ~112 | ~50 | Sim[cite: 1] |
+| **UCS** | 34 | - | ~112 | ~50 | Sim |
 
-*Ordem de expansão declarada:* `Norte, Sul, Oeste, Leste`[cite: 1].
+*Ordem de expansão declarada:* `Norte, Sul, Oeste, Leste`.
 
 ### 2.3 Justificativa sobre a BFS
-A BFS encontrou um caminho com menor número de passos (arestas), mas com custo financeiro e de energia maior ($55$ contra $34$ do UCS). Isso ocorre porque a BFS assume custos uniformes por aresta, violando a hipótese de custos de transição heterogêneos ($1$ e $4$) da Aula 03[cite: 1].
+A BFS encontrou um caminho com menor número de passos (arestas), mas com custo financeiro e de energia maior ($55$ contra $34$ do UCS). Isso ocorre porque a BFS assume custos uniformes por aresta, violando a hipótese de custos de transição heterogêneos ($1$ e $4$) da Aula 03.
 
 ### 2.4 Teste de Limite Teórico
-Ao expandir a grade para $n = 40$ e $n = 100$, a estratégia DFS e a BFS atingiram estouro de pilha (*Stack Overflow*) e estouro de memória (*Out of Memory*), respectivamente, comprovando os limites teóricos exponenciais $O(b^m)$ e $O(b^d)$ da Aula 03[cite: 1].
+Ao expandir a grade para $n = 40$ e $n = 100$, a estratégia DFS e a BFS atingiram estouro de pilha (*Stack Overflow*) e estouro de memória (*Out of Memory*), respectivamente, comprovando os limites teóricos exponenciais $O(b^m)$ e $O(b^d)$ da Aula 03.
 
 ---
 
@@ -66,11 +66,11 @@ Ao expandir a grade para $n = 40$ e $n = 100$, a estratégia DFS e a BFS atingir
 | Heurística | Custo da Rota | Nós Expandidos | Admissível? |
 | :--- | :---: | :---: | :---: |
 | **$h_1(n) = 0$** | 34 | ~112 | Sim (UCS disfarçado) |
-| **$h_2(n) = \text{Manhattan}$** | 34 | ~93 | Sim[cite: 1] |
+| **$h_2(n) = \text{Manhattan}$** | 34 | ~93 | Sim |
 | **$h_3(n) = 4 \times \text{Manhattan}$** | *[Seu Custo]* | *[Seu Valor]* | Não (Superestima) |
 
 ### 3.2 Prova e Superestimação
-* **$h_2$ (Manhattan):** É admissível pois o custo mínimo de transição para qualquer talhão é $1$, logo a distância em linha reta multiplicada por $1$ jamais supera o custo real restante[cite: 1].
+* **$h_2$ (Manhattan):** É admissível pois o custo mínimo de transição para qualquer talhão é $1$, logo a distância em linha reta multiplicada por $1$ jamais supera o custo real restante.
 * **$h_3$:** Multiplicar por $4$ faz com que a heurística supere o custo mínimo unitário em terrenos firmes (`.`), superestimando o custo real em talhões específicos da malha.
 
 ### 3.3 Análise Crítica e Custo de Negócio
@@ -84,10 +84,10 @@ Em cenários de inspeção agrícola intensiva onde o tempo de resposta do robô
 ## 4. Parte 4 — Regras e Incerteza
 
 ### 4.1 Sistema Especialista
-* Implementadas regras lógicas SE-ENTÃO no módulo `especialista.py` com encadeamento para trás para justificar a necessidade de manejo de pragas com base em umidade e histórico de pulverização[cite: 1].
+* Implementadas regras lógicas SE-ENTÃO no módulo `especialista.py` com encadeamento para trás para justificar a necessidade de manejo de pragas com base em umidade e histórico de pulverização.
 
 ### 4.2 Teorema de Bayes
-* Utilizando os parâmetros da matrícula **24114072**, obteve-se a probabilidade condicional $P(\text{infestado} \mid \text{sensor positivo})$ através do Teorema de Bayes, quantificando o volume semanal de falsas alarmes e o desperdício operacional de horas da equipe de agronomia em campo[cite: 1].
+* Utilizando os parâmetros da matrícula **24114072**, obteve-se a probabilidade condicional $P(\text{infestado} \mid \text{sensor positivo})$ através do Teorema de Bayes, quantificando o volume semanal de falsas alarmes e o desperdício operacional de horas da equipe de agronomia em campo.
 
 ---
 
