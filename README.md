@@ -4,7 +4,7 @@
 * **Disciplina:** Inteligência Artificial
 * **Período:** 2026.2
 * **Professor:** Ronierison Maciel (UniRios)
-* **Dupla:** Bruno Henrique Gomes wanderley (241.14.048) e João Anderson da Cruz Gonçalves dos Santos (241.14.072)
+* **Dupla:** Bruno Henrique Gomes Wanderley (241.14.048) e João Anderson da Cruz Gonçalves dos Santos (241.14.072)
 * **Matrícula-Semente:** 24114072
 
 ## 2. O que este projeto faz
@@ -14,4 +14,4 @@ Este projeto implementa agentes inteligentes baseados em busca (cega e informada
 Certifique-se de ter o Python 3.9+ instalado. No terminal, execute:
 ```bash
 pip install -r requirements.txt
-python src/main.py]
+python src/main.py
